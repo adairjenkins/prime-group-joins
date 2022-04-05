@@ -43,3 +43,12 @@ SELECT "orders".id, "orders".order_date, SUM("products".unit_price*"line_items".
 JOIN "line_items" ON "orders".id = "line_items".order_id
 JOIN "products" ON "products".id = "line_items".product_id
 GROUP BY "orders".id;
+
+-- 10. How much has each customer spent in total?
+SELECT "customers".first_name, "customers".last_name, SUM("products".unit_price*"line_items".quantity) FROM "customers"
+JOIN "addresses" ON "customers".id = "addresses".customer_id
+JOIN "orders" ON "orders".address_id = "addresses".id
+JOIN "line_items" ON "line_items".order_id = "orders".id
+JOIN "products" ON "line_items".product_id = "products".id
+GROUP BY "customers".id
+;
