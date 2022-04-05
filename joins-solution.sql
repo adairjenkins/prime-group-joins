@@ -37,3 +37,9 @@ SELECT COUNT("products".id) FROM "products";
 SELECT SUM("warehouse_product".on_hand), "products".description FROM "warehouse_product"
 JOIN "products" ON "products".id = "warehouse_product".product_id
 GROUP BY "products".description;
+
+-- 9. How much was the total cost for each order?
+SELECT "orders".id, "orders".order_date, SUM("products".unit_price*"line_items".quantity)  AS total_order_cost FROM "orders"
+JOIN "line_items" ON "orders".id = "line_items".order_id
+JOIN "products" ON "products".id = "line_items".product_id
+GROUP BY "orders".id;
